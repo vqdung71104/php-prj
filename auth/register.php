@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
     $confirm_password = trim($_POST['confirm_password'] ?? '');
-    $role = ($_POST['role'] === 'writer') ? 'writer' : 'user';
+    $role = 'writer';
     if ($username === '' || $password === '' || $confirm_password === '') {
         $error = "Vui lòng điền đầy đủ thông tin.";
     } elseif ($password !== $confirm_password) {
@@ -65,13 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="confirm_password">Xác nhận mật khẩu:</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
-            </div>
-            <div class="form-group">
-                <label for="role">Chọn vai trò:</label>
-                <select id="role" name="role">
-                    <option value="user">Người dùng</option>
-                    <option value="writer">Người viết bài</option>
-                </select>
             </div>
             <button type="submit" class="btn">Đăng ký</button>
         </form>

@@ -30,6 +30,12 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="/php-project/assets/css/templates-index.css">
 </head>
 <body>
+<!-- Form tìm kiếm -->
+<form method="GET" class="search-form">
+        <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
+        <input type="text" name="search" placeholder="Tìm kiếm bài viết...">
+        <button type="submit">Tìm kiếm</button>
+    </form>
 <div class="news-container">
     <?php while($row = $result->fetch_assoc()): ?>
         <a href="post.php?id=<?= $row['id'] ?>" class="news-card-link">

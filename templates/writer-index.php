@@ -34,12 +34,7 @@ $query_username = '?username=' . urlencode($username);
     <div class="writer-actions">
          <a href="/php-project/posts/create.php?username=<?= $_SESSION['username'] ?>" class="btn">Viết bài mới</a>
     </div>
-    <!-- Form tìm kiếm -->
-    <form method="GET" class="search-form">
-        <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
-        <input type="text" name="search" placeholder="Tìm kiếm bài viết...">
-        <button type="submit">Tìm kiếm</button>
-    </form>
+    
     <!-- Hiển thị bài viết -->
     <?php
     $search = isset($_GET['search']) ? $_GET['search'] : null;

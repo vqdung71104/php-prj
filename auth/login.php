@@ -14,7 +14,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
-    $role = ($_POST['role'] === 'writer') ? 'writer' : 'user';
+    $role = 'writer';
     if ($username === '' || $password === '') {
         $error = "Vui lòng điền đầy đủ thông tin.";
     } else {
@@ -23,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-        if ($user && password_verify($password, $user['password']) && $user['role'] === $role) {
+        if ($user && password_verify($password, $user['password']) && $user['role'] === 'writer') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
             $username_param = urlencode($user['username']);
-            $redirect_url = $user['role'] === 'writer' ? "/php-project/templates/writer-index.php?username=$username_param" : "/php-project/templates/user-index.php?username=$username_param";
+            $redirect_url = "/php-project/templates/writer-index.php?username=$username_param";
             header("Location: $redirect_url");
             exit();
         } else {
@@ -58,13 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="role">Chọn vai trò:</label>
-                <select id="role" name="role">
-                    <option value="user">Người dùng</option>
-                    <option value="writer">Người viết bài</option>
-                </select>
             </div>
             <button type="submit" class="btn">Đăng nhập</button>
         </form>
