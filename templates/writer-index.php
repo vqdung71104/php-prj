@@ -67,8 +67,8 @@ $query_username = '?username=' . urlencode($username);
     // Thêm nút sửa/xóa cho writer
     while($row = $result->fetch_assoc()): ?>
         <div class="post-actions">
-            <a href="edit-post.php?id=<?= $row['id'] ?>&username=<?= htmlspecialchars($username) ?>" class="btn">Sửa</a>
-            <a href="delete-post.php?id=<?= $row['id'] ?>&username=<?= htmlspecialchars($username) ?>" class="btn danger" onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')">Xóa</a>
+            <a href="/php-project/edit-post.php?id=<?= $row['id'] ?>&username=<?= htmlspecialchars($username) ?>" class="btn">Sửa</a>
+            <a href="/php-project/delete-post.php?id=<?= $row['id'] ?>&username=<?= htmlspecialchars($username) ?>" class="btn danger" onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')">Xóa</a>
         </div>
     <?php endwhile; ?>
 </div>

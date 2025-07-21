@@ -38,7 +38,7 @@ $result = $stmt->get_result();
     </form>
 <div class="news-container">
     <?php while($row = $result->fetch_assoc()): ?>
-        <a href="post.php?id=<?= $row['id'] ?>" class="news-card-link">
+        <a href="/php-project/posts/post.php?id=<?= $row['id'] ?>" class="news-card-link">
             <div class="news-card">
                 <div class="news-content">
                     <h2 class="news-title"><?= htmlspecialchars($row['title']) ?></h2>
