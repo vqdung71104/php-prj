@@ -36,7 +36,7 @@ require_once __DIR__ . '/../templates/header.php';
     <!-- Nút điều hướng -->
     <div class="navigation-buttons" style="margin-bottom: 20px;">
         <a href="/php-project/posts/create.php?username=<?= htmlspecialchars($username) ?>" class="btn">Viết bài mới</a>
-        <a href="/php-project/" class="btn">Về trang chính</a>
+        <a href="/php-project/templates/writer-index.php?username=<?= htmlspecialchars($username) ?>" class="btn">Về trang chính</a>
     </div>
     
     <!-- Danh sách bài viết -->

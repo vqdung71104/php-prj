@@ -8,7 +8,37 @@ require_once __DIR__ . '/../includes/functions.php';
 
 // Xử lý redirect sau khi đăng nhập/đăng xuất
 $current_page = basename($_SERVER['PHP_SELF']);
+$is_writer_page = ($current_page === 'writer-index.php');
+$base_url = $is_writer_page ? '/php-project/templates/writer-index.php' : '/php-project/';
 $allowed_pages = ['login.php', 'register.php', 'logout.php'];
+
+// Lấy URL hiện tại và phân tích
+$current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$url_parts = parse_url($current_url);
+$current_path = $url_parts['path'];
+
+// Xử lý query parameters
+$query_params = [];
+if (isset($url_parts['query'])) {
+    parse_str($url_parts['query'], $query_params);
+}
+
+// Xóa tham số category nếu có (cho nút "Tất cả")
+$all_params = $query_params;
+unset($all_params['category']);
+
+// Giữ lại các tham số khác (như username) khi thêm category
+$category_params = $query_params;
+
+// Tham số URL cần giữ lại
+$query_params = [];
+if (isset($_GET['username'])) {
+    $query_params['username'] = $_GET['username'];
+}
+
+// Tạo URL cho nút "Tất cả"
+$all_url = $base_url . (!empty($query_params) ? '?' . http_build_query($query_params) : '');
+
 
 // Nếu đang ở trang đăng nhập/đăng ký và đã đăng nhập, chuyển hướng
 if (in_array($current_page, ['login.php', 'register.php']) && isset($_SESSION['user_id'])) {
@@ -43,13 +73,25 @@ if (in_array($current_page, ['writer-index.php', 'create-post.php', 'edit-post.p
 <body>
     <div class="header-container">
         <div class="category-menu">
-            <a href="/php-project/" class="category-btn <?= !isset($_GET['category']) ? 'active' : '' ?>">Tất cả</a>
-            <a href="?category=kinh-te" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'kinh-te' ? 'active' : '' ?>">Kinh tế</a>
-            <a href="?category=chinh-tri" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'chinh-tri' ? 'active' : '' ?>">Chính trị</a>
-            <a href="?category=van-hoa" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'van-hoa' ? 'active' : '' ?>">Văn hóa</a>
-            <a href="?category=giao-duc" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'giao-duc' ? 'active' : '' ?>">Giáo dục</a>
-            <a href="?category=the-thao" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'the-thao' ? 'active' : '' ?>">Thể thao</a>
-            <a href="?category=the-gioi" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'the-gioi' ? 'active' : '' ?>">Thế giới</a>            
+            <a href="<?= $current_path ?>?<?= http_build_query($all_params) ?>" 
+       class="category-btn <?= !isset($_GET['category']) ? 'active' : '' ?>">
+        Tất cả
+    </a>
+            <a href="<?= $current_path ?>?<?= http_build_query(array_merge($category_params, ['category' => 'kinh-te'])) ?>" 
+       class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'kinh-te' ? 'active' : '' ?>">
+        Kinh tế
+    </a>
+            <a href="<?= $current_path ?>?<?= http_build_query(array_merge($category_params, ['category' => 'chinh-tri'])) ?>" 
+       class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'chinh-tri' ? 'active' : '' ?>">
+        Chính trị
+    </a>
+    <a href="<?= $current_path ?>?<?= http_build_query(array_merge($category_params, ['category' => 'van-hoa'])) ?>" 
+       class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'van-hoa' ? 'active' : '' ?>">
+        Văn hóa
+    </a>
+            <a href="<?= $current_path ?>?<?= http_build_query(array_merge($category_params, ['category' => 'giao-duc'])) ?>" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'giao-duc' ? 'active' : '' ?>">Giáo dục</a>
+            <a href="<?= $current_path ?>?<?= http_build_query(array_merge($category_params, ['category' => 'the-thao'])) ?>" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'the-thao' ? 'active' : '' ?>">Thể thao</a>
+            <a href="<?= $current_path ?>?<?= http_build_query(array_merge($category_params, ['category' => 'the-gioi'])) ?>" class="category-btn <?= isset($_GET['category']) && $_GET['category'] == 'the-gioi' ? 'active' : '' ?>">Thế giới</a>
         </div>
 
         <div class="user-info">

@@ -40,7 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("INSERT INTO posts (id, user_id, title, content, category, created_at) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('iissss', $new_id, $writer_id, $title, $content, $category, $created_at);
         if ($stmt->execute()) {
-            $success = 'Đăng bài thành công!';
+            // Sau khi đăng bài thành công, chuyển hướng đến trang xem bài đã đăng
+            header("Location: /php-project/posts/writer-post.php?username=" . urlencode($username));
+            exit();
         } else {
             $error = 'Có lỗi khi đăng bài.';
         }
@@ -85,8 +87,8 @@ require_once __DIR__ . '/../templates/header.php';
     
     <!-- Luôn hiển thị các nút điều hướng -->
     <div class="navigation-buttons" style="margin-top: 20px;">
-        <a href="/php-project/templates/writer-index.php?username=<?= htmlspecialchars($username) ?>" class="btn">Xem bài đã đăng</a>
-        <a href="/php-project/" class="btn">Về trang chính</a>
+        <a href="/php-project/posts/writer-post.php?username=<?= htmlspecialchars($username) ?>" class="btn">Xem bài đã đăng</a>
+        <a href="/php-project/templates/writer-index.php?username=<?= htmlspecialchars($username) ?>" class="btn">Về trang chính</a>
     </div>
 </div>
 
