@@ -1,7 +1,6 @@
 <?php
 // templates/index.php
 
-
 // Xử lý logic lấy bài viết từ database
 $category = isset($_GET['category']) ? $_GET['category'] : null;
 $query = "SELECT * FROM posts";
@@ -22,21 +21,32 @@ if ($category) {
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
-
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= isset($page_title) ? $page_title : 'Trang Bài Viết' ?></title>
+    <link rel="stylesheet" href="/php-project/assets/css/templates-index.css">
+</head>
+<body>
 <div class="news-container">
     <?php while($row = $result->fetch_assoc()): ?>
-        <div class="news-card">
-            <div class="news-content">
-                <h2 class="news-title"><?= htmlspecialchars($row['title']) ?></h2>
-                <div class="news-meta">
-                    <?= htmlspecialchars($row['category']) ?> • 
-                    <?= date('d/m/Y H:i', strtotime($row['created_at'])) ?>
-                </div>
-                <div class="news-body">
-                    <?= nl2br(htmlspecialchars($row['content'])) ?>
+        <a href="post.php?id=<?= $row['id'] ?>" class="news-card-link">
+            <div class="news-card">
+                <div class="news-content">
+                    <h2 class="news-title"><?= htmlspecialchars($row['title']) ?></h2>
+                    <div class="news-meta">
+                        <?= htmlspecialchars($row['category']) ?> • 
+                        <?= date('d/m/Y H:i', strtotime($row['created_at'])) ?>
+                    </div>
+                    <div class="news-excerpt">
+                        <?= nl2br(htmlspecialchars(substr($row['content'], 0, 200))) ?>...
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     <?php endwhile; ?>
 </div>
-
+</body>
+</html>
