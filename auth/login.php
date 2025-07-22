@@ -14,6 +14,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
+    $remember = isset($_POST['remember']);
     if ($email === '' || $password === '') {
         $error = "Vui lòng điền đầy đủ thông tin.";
     } else {
@@ -26,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
+            if ($remember) {
+                setcookie('rememberme', $user['id'], time() + 30*24*60*60, '/'); // 30 ngày
+            }
             $email_param = urlencode($user['email']);
             $redirect_url = "/php-project/templates/writer-index.php?email=$email_param";
             header("Location: $redirect_url");
@@ -57,6 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>
                 <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+                <input type="checkbox" id="remember" name="remember" style="width:auto;">
+                <label for="remember" style="margin:0;">Ghi nhớ đăng nhập</label>
             </div>
             <button type="submit" class="btn">Đăng nhập</button>
         </form>

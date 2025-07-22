@@ -77,11 +77,10 @@ require_once __DIR__ . '/../templates/header.php';
         <p>Bạn chưa có bài viết nào.</p>
     <?php endif; ?>
     
-    <!-- Nút điều hướng ở cuối trang
+    <!-- Nút điều hướng ở cuối trang 
     <div class="w3-bar w3-margin-top">
         <a href="/php-project/posts/create.php?email=<?= urlencode($email) ?>" class="w3-button w3-red w3-round w3-margin-right">Viết bài mới</a>
         <a href="/php-project/" class="w3-button w3-red w3-round">Về trang chính</a>
     </div>
-    -->  
+    -->
 </div>
-    

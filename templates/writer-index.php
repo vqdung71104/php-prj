@@ -12,7 +12,7 @@ if (!$username) {
 }
 
 // Lấy thông tin user từ DB
-$stmt = $conn->prepare("SELECT id, role FROM users WHERE username = ?");
+$stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
 $stmt->bind_param('s', $username);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
