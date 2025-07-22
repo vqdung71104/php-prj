@@ -95,17 +95,15 @@ if (in_array($current_page, ['writer-index.php', 'create-post.php', 'edit-post.p
         </div>
 
         <div class="user-info">
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <span>Xin chào, <?= htmlspecialchars($_SESSION['username']) ?> (<?= $_SESSION['role'] === 'writer' ? 'Writer' : 'User' ?>)</span>
-        <?php if ($_SESSION['role'] === 'writer'): ?>
-            <a class="writer-btn">Trang Writer</a>
-        <?php endif; ?>
-        <a href="/php-project/auth/logout.php" class="logout-btn">Đăng xuất</a>
-    <?php else: ?>
-        <a href="/php-project/login.php" class="login-btn">Đăng nhập</a>
-        <a href="/php-project/register.php" class="register-btn">Đăng ký</a>
-    <?php endif; ?>
-        </div>
+<?php if (isset($_SESSION['user_id'])): ?>
+    <span>Xin chào, <?= htmlspecialchars($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : htmlspecialchars($_SESSION['email']) ?></span>
+    <a href="/php-project/posts/create.php?email=<?= urlencode($_SESSION['email']) ?>" class="btn">Tạo bài viết mới</a>
+    <a href="/php-project/auth/logout.php" class="logout-btn">Đăng xuất</a>
+<?php else: ?>
+    <a href="/php-project/login.php" class="login-btn">Đăng nhập</a>
+    <a href="/php-project/register.php" class="register-btn">Đăng ký</a>
+<?php endif; ?>
+</div>
     </div>
 
     <!-- Hiển thị thông báo nếu có -->

@@ -2,23 +2,23 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
-// Lấy username từ param
-$username = isset($_GET['username']) ? trim($_GET['username']) : null;
-if (!$username) {
+// Lấy email từ param
+$email = isset($_GET['email']) ? trim($_GET['email']) : (isset($_SESSION['email']) ? $_SESSION['email'] : null);
+if (!$email) {
     header("Location: /php-project/");
     exit();
 }
 
-// Lấy thông tin writer từ DB
-$stmt = $conn->prepare("SELECT id, role FROM users WHERE username = ?");
-$stmt->bind_param('s', $username);
+// Lấy thông tin user từ DB
+$stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+$stmt->bind_param('s', $email);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
-if (!$user || $user['role'] !== 'writer') {
+if (!$user) {
     header("Location: /php-project/");
     exit();
 }
-$writer_id = $user['id'];
+$user_id = $user['id'];
 
 // Lấy danh sách category từ một bảng hoặc hardcode nếu chưa có bảng
 $categories = ['kinh-te', 'chinh-tri', 'van-hoa', 'giao-duc', 'the-thao', 'the-gioi'];
@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_id = $row['max_id'] ? $row['max_id'] + 1 : 1;
         $created_at = date('Y-m-d H:i:s');
         $stmt = $conn->prepare("INSERT INTO posts (id, user_id, title, content, category, created_at) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('iissss', $new_id, $writer_id, $title, $content, $category, $created_at);
+        $stmt->bind_param('iissss', $new_id, $user_id, $title, $content, $category, $created_at);
         if ($stmt->execute()) {
             // Sau khi đăng bài thành công, chuyển hướng đến trang xem bài đã đăng
-            header("Location: /php-project/posts/writer-post.php?username=" . urlencode($username));
+            header("Location: /php-project/posts/writer-post.php?email=" . urlencode($email));
             exit();
         } else {
             $error = 'Có lỗi khi đăng bài.';
@@ -87,8 +87,8 @@ require_once __DIR__ . '/../templates/header.php';
     
     <!-- Luôn hiển thị các nút điều hướng -->
     <div class="navigation-buttons" style="margin-top: 20px;">
-        <a href="/php-project/posts/writer-post.php?username=<?= htmlspecialchars($username) ?>" class="btn">Xem bài đã đăng</a>
-        <a href="/php-project/templates/writer-index.php?username=<?= htmlspecialchars($username) ?>" class="btn">Về trang chính</a>
+        <a href="/php-project/posts/writer-post.php?email=<?= htmlspecialchars($email) ?>" class="btn">Xem bài đã đăng</a>
+        <a href="/php-project/templates/writer-index.php?email=<?= htmlspecialchars($email) ?>" class="btn">Về trang chính</a>
     </div>
 </div>
 

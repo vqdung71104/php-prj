@@ -4,35 +4,34 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
 if (isset($_SESSION['user_id'])) {
-    $username = urlencode($_SESSION['username']);
-    $redirect_url = $_SESSION['role'] === 'writer' ? "/php-project/templates/writer-index.php?username=$username" : "/php-project/templates/user-index.php?username=$username";
+    $email = urlencode($_SESSION['email']);
+    $redirect_url = "/php-project/templates/writer-index.php?email=$email";
     header("Location: $redirect_url");
     exit();
 }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
-    $role = 'writer';
-    if ($username === '' || $password === '') {
+    if ($email === '' || $password === '') {
         $error = "Vui lòng điền đầy đủ thông tin.";
     } else {
-        $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
-        $stmt->bind_param('s', $username);
+        $stmt = $conn->prepare("SELECT id, username, password, email FROM users WHERE email = ?");
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
-        if ($user && password_verify($password, $user['password']) && $user['role'] === 'writer') {
+        if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
-            $username_param = urlencode($user['username']);
-            $redirect_url = "/php-project/templates/writer-index.php?username=$username_param";
+            $_SESSION['email'] = $user['email'];
+            $email_param = urlencode($user['email']);
+            $redirect_url = "/php-project/templates/writer-index.php?email=$email_param";
             header("Location: $redirect_url");
             exit();
         } else {
-            $error = "Tên đăng nhập, mật khẩu hoặc vai trò không đúng.";
+            $error = "Email hoặc mật khẩu không đúng.";
         }
     }
 }
@@ -52,8 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
         <form method="POST">
             <div class="form-group">
-                <label for="username">Tên đăng nhập:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="email">Gmail:</label>
+                <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu:</label>

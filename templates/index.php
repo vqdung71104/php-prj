@@ -3,21 +3,30 @@
 
 // Xử lý logic lấy bài viết từ database
 $category = isset($_GET['category']) ? $_GET['category'] : null;
+$search = isset($_GET['search']) ? trim($_GET['search']) : null;
 $query = "SELECT * FROM posts";
 $params = [];
+$types = '';
+$conditions = [];
 
 if ($category) {
-    $query .= " WHERE category = ?";
+    $conditions[] = "category = ?";
     $params[] = $category;
+    $types .= 's';
 }
-
+if ($search) {
+    $conditions[] = "title LIKE ?";
+    $params[] = "%$search%";
+    $types .= 's';
+}
+if ($conditions) {
+    $query .= " WHERE " . implode(' AND ', $conditions);
+}
 $query .= " ORDER BY created_at DESC";
 $stmt = $conn->prepare($query);
-
-if ($category) {
-    $stmt->bind_param('s', $category);
+if ($params) {
+    $stmt->bind_param($types, ...$params);
 }
-
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -31,11 +40,12 @@ $result = $stmt->get_result();
 </head>
 <body>
 <!-- Form tìm kiếm -->
-<form method="GET" class="search-form">
-        <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
-        <input type="text" name="search" placeholder="Tìm kiếm bài viết...">
-        <button type="submit">Tìm kiếm</button>
-    </form>
+<form method="GET" class="search-form" autocomplete="off">
+    <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>">
+    <input type="text" name="search" id="search-input" placeholder="Tìm kiếm bài viết..." value="<?= isset($search) ? htmlspecialchars($search) : '' ?>">
+    <button type="submit">Tìm kiếm</button>
+    <div id="search-suggestions" class="search-suggestions"></div>
+</form>
 <div class="news-container">
     <?php while($row = $result->fetch_assoc()): ?>
         <a href="/php-project/posts/post.php?id=<?= $row['id'] ?>" class="news-card-link">
@@ -54,5 +64,6 @@ $result = $stmt->get_result();
         </a>
     <?php endwhile; ?>
 </div>
+<script src="/php-project/assets/js/search-autocomplete.js"></script>
 </body>
 </html>

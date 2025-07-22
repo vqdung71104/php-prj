@@ -39,7 +39,13 @@ $related_posts = $related_stmt->get_result();
         <div class="post-body" style="margin-bottom: 20px;">
             <?= nl2br(htmlspecialchars($post['content'])) ?>
         </div>
-        <a href="/php-project/templates/index.php" class="back-button">Quay lại danh sách</a>
+        <?php if (isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'writer' && $_SESSION['user_id'] == $post['user_id']): ?>
+            <div class="post-actions" style="margin-bottom: 20px;">
+                <a href="/php-project/posts/edit.php?id=<?= $post['id'] ?>" class="btn">Sửa</a>
+                <a href="/php-project/posts/delete.php?id=<?= $post['id'] ?>" class="btn danger" onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')">Xóa</a>
+            </div>
+        <?php endif; ?>
+        <a href="/php-project/" class="back-button">Quay lại danh sách</a>
     </div>
     <aside class="related-posts" style="flex: 1; border-left: 1px solid #eee; padding-left: 24px;">
         <h3>Bài cùng chuyên mục</h3>
