@@ -1,0 +1,18 @@
+@media (max-width: 900px) {
+  .container {
+    max-width: 100%;
+    padding: 8px;
+  }
+  .posts-list {
+    gap: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .post-card {
+    padding: 12px 8px;
+  }
+}

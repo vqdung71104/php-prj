@@ -24,5 +24,6 @@
 
 <!-- Liên kết đến file CSS -->
 <link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </body>
 </html>

@@ -1,21 +1,12 @@
 /* assets/css/style.css */
 
-/* Reset & base */
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Roboto', 'Arial', sans-serif;
-    line-height: 1.7;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #f5f5f5;
     color: #222;
+    margin: 0;
+    padding: 0;
 }
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -24,8 +15,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.07);
 }
-
-/* Form đăng nhập/đăng ký */
 .auth-container {
     max-width: 480px;
     margin: 60px auto;
@@ -34,18 +23,15 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.10);
 }
-
 .form-group {
     margin-bottom: 24px;
 }
-
 .form-group label {
     display: block;
     margin-bottom: 7px;
     font-weight: 600;
     color: #333;
 }
-
 .form-group input,
 .form-group textarea,
 .form-group select {
@@ -66,13 +52,11 @@ body {
 .form-group textarea {
     min-height: 180px;
 }
-
-/* Buttons */
 .btn {
     display: inline-block;
     padding: 12px 28px;
-    background: linear-gradient(90deg, #e74c3c 0%, #3498db 100%);
-    color: #fff;
+    background: #ffd700;
+    color: #222;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -83,7 +67,8 @@ body {
     transition: background 0.2s, box-shadow 0.2s;
 }
 .btn:hover {
-    background: linear-gradient(90deg, #c0392b 0%, #2980b9 100%);
+    background: #fff8dc;
+    color: #222;
     box-shadow: 0 4px 16px rgba(52,152,219,0.13);
 }
 .btn.cancel {
@@ -99,8 +84,6 @@ body {
 .btn.danger:hover {
     background: #c0392b;
 }
-
-/* Alerts */
 .alert {
     padding: 12px 18px;
     margin-bottom: 24px;
@@ -117,18 +100,13 @@ body {
     color: #155724;
     border: 1px solid #c3e6cb;
 }
-
-/* Writer actions */
 .writer-actions {
     margin-bottom: 24px;
 }
-
 .post-actions {
     margin-top: 12px;
     margin-bottom: 32px;
 }
-
-/* Search form */
 .search-form {
     margin-bottom: 24px;
     display: flex;
@@ -145,8 +123,6 @@ body {
     padding: 12px 28px;
     font-size: 17px;
 }
-
-/* Responsive */
 @media (max-width: 900px) {
     .container {
         padding: 16px 4px;

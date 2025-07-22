@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.btn {
+  display: inline-block;
+  background: #d0021b;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-right: 10px;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #a80013;
+}
+.navigation-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+h2 {
+  font-size: 2rem;
+  margin-bottom: 18px;
+  color: #d0021b;
+  font-weight: 700;
+}

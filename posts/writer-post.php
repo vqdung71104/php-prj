@@ -31,44 +31,57 @@ $page_title = 'Bài viết của tôi';
 require_once __DIR__ . '/../templates/header.php';
 ?>
 
-<div class="container">
-    <h2>Bài viết của tôi</h2>
+<?php
+// ...existing code...
+$page_title = 'Bài viết của tôi';
+require_once __DIR__ . '/../templates/header.php';
+?>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/php-project/assets/css/reset.css">
+<link rel="stylesheet" href="/php-project/assets/css/base.css">
+<link rel="stylesheet" href="/php-project/assets/css/writer-post.css">
+<link rel="stylesheet" href="/php-project/assets/css/responsive.css">
+
+
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<div class="w3-content w3-padding" style="max-width:1100px">
+    <h2 class="w3-text-red w3-margin-bottom">Bài viết của tôi</h2>
     
     <!-- Nút điều hướng -->
-    <div class="navigation-buttons" style="margin-bottom: 20px;">
-        <a href="/php-project/posts/create.php?email=<?= urlencode($email) ?>" class="btn">Viết bài mới</a>
-        <a href="/php-project/templates/writer-index.php?email=<?= urlencode($email) ?>" class="btn">Về trang chính</a>
+    <div class="w3-bar w3-margin-bottom">
+        <a href="/php-project/posts/create.php?email=<?= urlencode($email) ?>" class="w3-button w3-red w3-round w3-margin-right">Viết bài mới</a>
+        <a href="/php-project/templates/writer-index.php?email=<?= urlencode($email) ?>" class="w3-button w3-red w3-round">Về trang chính</a>
     </div>
     
     <!-- Danh sách bài viết -->
     <?php if (count($posts) > 0): ?>
-        <div class="posts-list">
-            <?php foreach ($posts as $post): ?>
-                <div class="post-card" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
-                    <h3><?= htmlspecialchars($post['title']) ?></h3>
-                    <div class="post-meta" style="color: #666; margin-bottom: 10px;">
-                        <span>Chuyên mục: <?= htmlspecialchars(ucfirst(str_replace('-', ' ', $post['category']))) ?></span> • 
-                        <span>Ngày đăng: <?= date('d/m/Y H:i', strtotime($post['created_at'])) ?></span>
-                    </div>
-                    <div class="post-content" style="margin-bottom: 10px;">
-                        <?= nl2br(htmlspecialchars(substr($post['content'], 0, 200))) ?>...
-                    </div>
-                    <div class="post-actions">
-                        <a href="/php-project/posts/edit.php?id=<?= $post['id'] ?>&email=<?= urlencode($email) ?>" class="btn">Sửa</a>
-                        <a href="/php-project/posts/delete.php?id=<?= $post['id'] ?>&email=<?= urlencode($email) ?>" class="btn" onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')">Xóa</a>
-                    </div>
+        <?php foreach ($posts as $post): ?>
+            <div class="w3-card w3-white w3-round w3-margin-bottom w3-padding">
+                <h3 class="w3-text-red"><?= htmlspecialchars($post['title']) ?></h3>
+                <div class="w3-text-grey w3-small w3-margin-bottom">
+                    <span>Chuyên mục: <?= htmlspecialchars(ucfirst(str_replace('-', ' ', $post['category']))) ?></span> • 
+                    <span>Ngày đăng: <?= date('d/m/Y H:i', strtotime($post['created_at'])) ?></span>
                 </div>
-            <?php endforeach; ?>
-        </div>
+                <div class="w3-margin-bottom">
+                    <?= nl2br(htmlspecialchars(substr($post['content'], 0, 200))) ?>...
+                </div>
+                <div>
+                    <a href="/php-project/posts/edit.php?id=<?= $post['id'] ?>&email=<?= urlencode($email) ?>" class="w3-button w3-blue w3-round w3-margin-right">Sửa</a>
+                    <a href="/php-project/posts/delete.php?id=<?= $post['id'] ?>&email=<?= urlencode($email) ?>" class="w3-button w3-grey w3-round" onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')">Xóa</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
     <?php else: ?>
         <p>Bạn chưa có bài viết nào.</p>
     <?php endif; ?>
     
-    <!-- Nút điều hướng ở cuối trang -->
-    <div class="navigation-buttons" style="margin-top: 20px;">
-        <a href="/php-project/posts/create.php?email=<?= urlencode($email) ?>" class="btn">Viết bài mới</a>
-        <a href="/php-project/" class="btn">Về trang chính</a>
+    <!-- Nút điều hướng ở cuối trang
+    <div class="w3-bar w3-margin-top">
+        <a href="/php-project/posts/create.php?email=<?= urlencode($email) ?>" class="w3-button w3-red w3-round w3-margin-right">Viết bài mới</a>
+        <a href="/php-project/" class="w3-button w3-red w3-round">Về trang chính</a>
     </div>
+    -->  
 </div>
-
-<?php require_once __DIR__ . '/../templates/footer.php'; ?>
+    

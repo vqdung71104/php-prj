@@ -1,0 +1,35 @@
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.post-card {
+  border: 1px solid #e5e5e5;
+  padding: 18px 20px;
+  border-radius: 8px;
+  background: #fafbfc;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.03);
+  transition: box-shadow 0.2s;
+}
+.post-card:hover {
+  box-shadow: 0 4px 16px rgba(208,2,27,0.08);
+}
+.post-card h3 {
+  font-size: 1.25rem;
+  color: #d0021b;
+  margin-bottom: 8px;
+}
+.post-meta {
+  color: #888;
+  font-size: 0.98rem;
+  margin-bottom: 10px;
+}
+.post-content {
+  margin-bottom: 10px;
+  color: #222;
+  font-size: 1.05rem;
+}
+.post-actions {
+  display: flex;
+  gap: 10px;
+}

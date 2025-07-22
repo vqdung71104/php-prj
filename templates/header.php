@@ -69,6 +69,7 @@ if (in_array($current_page, ['writer-index.php', 'create-post.php', 'edit-post.p
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($page_title) ? $page_title : 'Trang Bài Viết' ?></title>
     <link rel="stylesheet" href="/php-project/assets/css/header.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
 <body>
     <div class="header-container">

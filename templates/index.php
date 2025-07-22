@@ -37,6 +37,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($page_title) ? $page_title : 'Trang Bài Viết' ?></title>
     <link rel="stylesheet" href="/php-project/assets/css/templates-index.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
 <body>
 <!-- Form tìm kiếm -->
